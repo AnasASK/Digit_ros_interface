@@ -1,10 +1,10 @@
 <launch>
-    <!-- define sensor id parameter -->
-    <param name="sensor_id" type="str" value="D00055_D00045" /> 
-    <node pkg="digit_interface" type="digit.py" name="digit55" output="screen" >
-    
-    </node>
+    <!-- Define a launch file argument with a default value -->
+    <arg name="sensor_ids" default="D20778" />
 
-   
+    <!-- Pass the argument as a parameter to the node -->
+    <param name="sensor_id" value="$(arg sensor_ids)" />
 
+    <!-- Define the node -->
+    <node pkg="digit_interface" type="digit.py" name="digit_interface_node" output="screen" />
 </launch>

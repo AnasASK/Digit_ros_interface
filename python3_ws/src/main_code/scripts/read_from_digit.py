@@ -1,4 +1,4 @@
-#!/home/julio/Escritorio/julio/doctorado/primer_anyo/digit/ros/python3_ws/py3env/bin/python
+#! /usr/bin/python3
 
 # first of all, you need to source de virtualenv
 

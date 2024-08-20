@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#! /usr/bin/python3
 
 # first of all, you need to source the virtualenv. Then source the devel setup.bash file.
 

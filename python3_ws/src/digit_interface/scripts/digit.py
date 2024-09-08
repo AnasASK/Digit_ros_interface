@@ -100,7 +100,7 @@ def main():
             publishers[sensor_id].publish(image_msg)
 
         # Control the rate of publication
-        rospy.Rate(30).sleep()  # Set this to the desired FPS
+        rospy.Rate(300).sleep()  # Set this to the desired FPS
 
 if __name__ == '__main__':
     main()

@@ -1,5 +1,4 @@
-#!/usr/bin/env python3
-
+#!/opt/miniconda/envs/rosallegro/bin/python3
 # first of all, you need to source the virtualenv. Then source the devel setup.bash file.
 
 # ROS IMPORTS
@@ -28,10 +27,31 @@ def setup_digit():
     for sensor_id in sensor_ids_list:
         digit_sensor = Digit(sensor_id)
         digit_sensor.connect()
+        
+        # Setting up sensor configurations
+        configure_digit_sensor(digit_sensor)
+        
         digit_sensors.append((digit_sensor, sensor_id))
 
     return digit_sensors
 
+'''
+    configure_digit_sensor function: Sets up the desired configurations for the digit sensors.
+    Arguments:
+        - digit_sensor: sensor object
+    Returns: None
+'''
+def configure_digit_sensor(digit_sensor):
+    # Set the LED intensity
+    digit_sensor.set_intensity(Digit.LIGHTING_MAX)  # Adjust the intensity as needed
+    
+    # Set the resolution to QVGA (you can change to others like VGA)
+    qvga_res = Digit.STREAMS["QVGA"]
+    digit_sensor.set_resolution(qvga_res)
+    
+    # Set the FPS to 30 fps
+    fps_30 = Digit.STREAMS["QVGA"]["fps"]["30fps"]
+    digit_sensor.set_fps(fps_30)
 
 '''
     main function: initialize the ros node and the publisher. Runs an infinite loop
@@ -66,10 +86,6 @@ def main():
             # Get image from the sensor
             digit_img = digit_sensor.get_frame()
 
-            # Show the image using OpenCV (optional)
-            #cv2.imshow(f"{sensor_id}", digit_img)
-            #cv2.waitKey(1)
-
             # Create the ROS message for the image
             image_msg = Image()
             image_msg.header.stamp = rospy.Time.now()
@@ -84,7 +100,7 @@ def main():
             publishers[sensor_id].publish(image_msg)
 
         # Control the rate of publication
-        rospy.Rate(100).sleep()
+        rospy.Rate(30).sleep()  # Set this to the desired FPS
 
 if __name__ == '__main__':
     main()
